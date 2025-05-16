@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AREY CENTRAL - Control de Ingresos y Egresos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header-container {
+            background-color: #556b2f;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .header-title {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .header-subtitle {
+            font-size: 1.2em;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        select,
+        input[type="number"],
+        textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+
+        select {
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill="%23343a40" viewBox="0 0 4 5"><path d="M2 0L0 2h4L2 0z"/></svg>');
+            background-repeat: no-repeat;
+            background-position-x: calc(100% - 10px);
+            background-position-y: center;
+            padding-right: 30px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group i {
+            margin-right: 10px;
+            color: #6c757d;
+        }
+
+        .submit-button {
+            background-color: #d63384;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .submit-button:hover {
+            background-color: #c02e7a;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .message-container {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Estilos responsive */
+        @media (max-width: 768px) {
+            .form-container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .header-title {
+                font-size: 1.5em;
+            }
+
+            .header-subtitle {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1 class="header-title"><i class="fas fa-spa"></i> AREY CENTRAL DE BELLEZA Y CAPACITACIÓN <i class="fas fa-graduation-cap"></i></h1>
+        <p class="header-subtitle"><i class="fas fa-coins"></i> Control de Ingresos y Egresos <i class="fas fa-file-invoice-dollar"></i></p>
+    </div>
+
+    <div class="form-container">
+        <form id="registroForm">
+            <div class="form-group input-group">
+                <i class="fas fa-building"></i>
+                <label for="unidadNegocio">Unidad de negocio:</label>
+                <select id="unidadNegocio" name="unidadNegocio" required>
+                    <option value="">Seleccionar</option>
+                    <option value="AREY Morelia">AREY Morelia</option>
+                    <option value="AREY Capacitación">AREY Capacitación</option>
+                    <option value="AREY Foráneo">AREY Foráneo</option>
+                </select>
+            </div>
+
+            <div class="form-group input-group">
+                <i class="fas fa-user"></i>
+                <label for="registradoPor">Registró:</label>
+                <select id="registradoPor" name="registradoPor" required>
+                    <option value="">Seleccionar</option>
+                    <option value="Yera">Yera</option>
+                    <option value="Sara">Sara</option>
+                    <option value="Marlene">Marlene</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Tipo de movimiento:</label>
+                <div class="input-group">
+                    <i class="fas fa-arrow-up"></i>
+                    <input type="radio" id="ingreso" name="tipoMovimiento" value="Ingreso" required>
+                    <label for="ingreso">Ingreso</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-arrow-down"></i>
+                    <input type="radio" id="egreso" name="tipoMovimiento" value="Egreso" required>
+                    <label for="egreso">Egreso</label>
+                </div>
+            </div>
+
+            <div id="ingresoCampos" class="hidden">
+                <div class="form-group input-group">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <label for="tipoIngreso">Tipo de ingreso (servicio o curso):</label>
+                    <select id="tipoIngreso" name="tipoIngreso">
+                        <option value="">Seleccionar</option>
+                        <option value="DELINEADO DE OJOS">DELINEADO DE OJOS</option>
+                        <option value="DEPILACIÓN CON CERA">DEPILACIÓN CON CERA</option>
+                        <option value="EXTENSIONES DE PESTAÑAS">EXTENSIONES DE PESTAÑAS</option>
+                        <option value="MASAJES">MASAJES</option>
+                        <option value="MICROPIGMENTACIÓN DE CEJAS">MICROPIGMENTACIÓN DE CEJAS</option>
+                        <option value="MICROPIGMENTACIÓN DE LABIOS">MICROPIGMENTACIÓN DE LABIOS</option>
+                        <option value="MICROPIGMENTACIÓN DE OJOS">MICROPIGMENTACIÓN DE OJOS</option>
+                        <option value="PLASMA RICO EN PLAQUETAS">PLASMA RICO EN PLAQUETAS</option>
+                        <option value="POWER BROWS">POWER BROWS</option>
+                        <option value="TRATAMIENTOS FACIALES">TRATAMIENTOS FACIALES</option>
+                        <option value="TRATAMIENTOS REDUCTIVOS">TRATAMIENTOS REDUCTIVOS</option>
+                        <option value="DEPILACIÓN LASER">DEPILACIÓN LASER</option>
+                        <option value="CURSO LABIOS Y OJOS">CURSO LABIOS Y OJOS</option>
+                        <option value="CURSO LABIOS">CURSO LABIOS</option>
+                        <option value="CURSO OJOS">CURSO OJOS</option>
+                        <option value="CURSO DE CEJAS, LABIOS Y OJOS">CURSO DE CEJAS, LABIOS Y OJOS</option>
+                        <option value="CURSO MICROPICMENTACION DE CEJAS">CURSO MICROPICMENTACION DE CEJAS</option>
+                        <option value="CURSO CERA ESPAÑOLA">CURSO CERA ESPAÑOLA</option>
+                        <option value="CURSO PRP, DERMAPEN Y BB GLOW">CURSO PRP, DERMAPEN Y BB GLOW</option>
+                        <option value="CURSO PRP">CURSO PRP</option>
+                        <option value="CURSO BOTOX">CURSO BOTOX</option>
+                        <option value="CURSO MICRO PUNTURA BRASILEÑA">CURSO MICRO PUNTURA BRASILEÑA</option>
+                        <option value="CURSO DERMAPEN">CURSO DERMAPEN</option>
+                        <option value="CURSO BB GLOW">CURSO BB GLOW</option>
+                        <option value="CURSO PLASMA PEN">CURSO PLASMA PEN</option>
+                        <option value="CURSO MESOTERAPIA">CURSO MESOTERAPIA</option>
+                        <option value="CURSO DE PRIMEROS AUXILIOS">CURSO DE PRIMEROS AUXILIOS</option>
+                        <option value="CURSO DE ASEPSIA Y ANTISEPSIA">CURSO DE ASEPSIA Y ANTISEPSIA</option>
+                        <option value="DIPLOMADO DE AUXILIAR DE ENFERMERÍA">DIPLOMADO DE AUXILIAR DE ENFERMERÍA</option>
+                        <option value="DIPLOMADO DE MICROPIGMENTACIÓN FACIAL">DIPLOMADO DE MICROPIGMENTACIÓN FACIAL</option>
+                        <option value="DIPLOMADO DE PODOLOGÍA">DIPLOMADO DE PODOLOGÍA</option>
+                        <option value="DIPLOMADO DERMOCOSMETOLOGIA">DIPLOMADO DERMOCOSMETOLOGIA</option>
+                        <option value="OTROS CURSOS">OTROS CURSOS</option>
+                    </select>
+                </div>
+                <div id="otroIngresoEspecificar" class="form-group input-group hidden">
+                    <i class="fas fa-file-alt"></i>
+                    <label for="especificarIngreso">Especificar servicio o curso cobrado:</label>
+                    <textarea id="especificarIngreso" name="especificarIngreso" rows="3"></textarea>
+                </div>
+                <div class="form-group input-group">
+                    <i class="fas fa-users"></i>
+                    <label for="formaCaptacion">Forma de captación:</label>
+                    <select id="formaCaptacion" name="formaCaptacion">
+                        <option value="">Seleccionar</option>
+                        <option value="Cliente habitual">Cliente habitual</option>
+                        <option value="Recomendación">Recomendación</option>
+                        <option value="Publicación pagada">Publicación pagada</option>
+                        <option value="Publicación orgánica">Publicación orgánica</option>
+                        <option value="Alumno">Alumno</option>
+                    </select>
+                </div>
+                <div class="form-group input-group">
+                    <i class="fas fa-user-check"></i>
+                    <label for="realizoServicio">Realizó el servicio:</label>
+                    <select id="realizoServicio" name="realizoServicio">
+                        <option value="">Seleccionar</option>
+                        <option value="Yera">Yera</option>
+                        <option value="Sara">Sara</option>
+                    </select>
+                </div>
+                <div class="form-group input-group">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <label for="formaPagoIngreso">Forma de pago:</label>
+                    <select id="formaPagoIngreso" name="formaPagoIngreso">
+                        <option value="">Seleccionar</option>
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Tarjeta">Tarjeta</option>
+                        <option value="Transferencia">Transferencia</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="egresoCampos" class="hidden">
+                <div class="form-group input-group">
+                    <i class="fas fa-shopping-cart"></i>
+                    <label for="tipoEgreso">Tipo de egreso:</label>
+                    <select id="tipoEgreso" name="tipoEgreso">
+                        <option value="">Seleccionar</option>
+                        <option value="ADQUISICIÓN DE MERCANCÍAS">ADQUISICIÓN DE MERCANCÍAS</option>
+                        <option value="CAFETERÍA (CAFÉ, TE, AZÚCAR, AGUA, REFRESCO)">CAFETERÍA (CAFÉ, TE, AZÚCAR, AGUA, REFRESCO)</option>
+                        <option value="EXTRACCIÓN DE UTILIDAD">EXTRACCIÓN DE UTILIDAD</option>
+                        <option value="LIMPIEZA E HIGIENE">LIMPIEZA E HIGIENE</option>
+                        <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+                        <option value="MOBILIARIO Y EQUIPOS">MOBILIARIO Y EQUIPOS</option>
+                        <option value="NOMINA">NOMINA</option>
+                        <option value="PAGO DE COMISIONES">PAGO DE COMISIONES</option>
+                        <option value="PAPELERÍA">PAPELERÍA</option>
+                        <option value="PUBLICIDAD">PUBLICIDAD</option>
+                        <option value="RENTA">RENTA</option>
+                        <option value="SERVICIOS (AGUA, LUZ, INTERNET)">SERVICIOS (AGUA, LUZ, INTERNET)</option>
+                        <option value="VIÁTICOS (GASTOS DE TRANSPORTE, ALIMENTOS, HOSPEDAJE)">VIÁTICOS (GASTOS DE TRANSPORTE, ALIMENTOS, HOSPEDAJE)</option>
+                        <option value="GASTOS PERSONALES">GASTOS PERSONALES</option>
+                        <option value="OTROS">OTROS</option>
+                    </select>
+                </div>
+                <div id="otroEgresoEspecificar" class="form-group input-group hidden">
+                    <i class="fas fa-file-alt"></i>
+                    <label for="especificarEgreso">Especificar el tipo de egreso:</label>
+                    <textarea id="especificarEgreso" name="especificarEgreso" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <i class="fas fa-dollar-sign"></i>
+                <label for="monto">Monto:</label>
+                <input type="number" id="monto" name="monto" min="0.01" step="0.01" required>
+            </div>
+
+            <div class="form-group input-group">
+                <i class="fas fa-sticky-note"></i>
+                <label for="observaciones">Observaciones (opcional):</label>
+                <textarea id="observaciones" name="observaciones" rows="3"></textarea>
+            </div>
+
+            <div class="message-container" id="messageContainer"></div>
+
+            <button type="submit" class="submit-button" id="enviarBtn"><i class="fas fa-paper-plane"></i> Enviar Información</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tipoMovimientoRadios = document.querySelectorAll('input[name="tipoMovimiento"]');
+            const ingresoCampos = document.getElementById('ingresoCampos');
+            const egresoCampos = document.getElementById('egresoCampos');
+            const tipoIngresoSelect = document.getElementById('tipoIngreso');
+            const otroIngresoEspecificarDiv = document.getElementById('otroIngresoEspecificar');
+            const tipoEgresoSelect = document.getElementById('tipoEgreso');
+            const otroEgresoEspecificarDiv = document.getElementById('otroEgresoEspecificar');
+            const registroForm = document.getElementById('registroForm');
+            const enviarBtn = document.getElementById('enviarBtn');
+            const messageContainer = document.getElementById('messageContainer');
+
+            // Mostrar/ocultar campos según el tipo de movimiento
+            tipoMovimientoRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (radio.value === 'Ingreso') {
+                        ingresoCampos.classList.remove('hidden');
+                        egresoCampos.classList.add('hidden');
+                    } else if (radio.value === 'Egreso') {
+                        ingresoCampos.classList.add('hidden');
+                        egresoCampos.classList.remove('hidden
